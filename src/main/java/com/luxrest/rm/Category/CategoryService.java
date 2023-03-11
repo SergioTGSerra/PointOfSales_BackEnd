@@ -17,7 +17,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getCategoryById(Long id){
+    public Category getCategoryById(Integer id){
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o ID: " + id));
     }
@@ -26,12 +26,12 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Category updateCategory(Long id, Category category){
+    public Category updateCategory(Integer id, Category category){
         Category existingCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         existingCategory.setName(category.getName());
         existingCategory.setDescription(category.getDescription());
-        existingCategory.set_active(category.is_active());
+        existingCategory.setIs_active(category.getIs_active());
         return categoryRepository.save(existingCategory);
     }
 }
