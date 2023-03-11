@@ -3,6 +3,8 @@ package com.luxrest.rm.Product;
 import com.luxrest.rm.Category.Category;
 import com.luxrest.rm.Tax.Tax;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -11,21 +13,27 @@ import lombok.Data;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    private Integer id;
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    private double price;
+    @NotNull(message = "Price is mandatory")
+    private Double price;
 
-    private int stock;
+    @NotNull(message = "Stock is mandatory")
+    private Integer stock;
 
-    private boolean is_active;
+    @NotNull
+    private Boolean isActive;
 
-    private boolean is_deleted;
+    @NotNull
+    private Boolean isDeleted;
 
+    @NotNull(message = "Category is mandatory")
     @ManyToOne
-    private Category id_category;
+    private Category category;
 
+    @NotNull(message = "Tax is mandatory")
     @ManyToOne
-    private Tax id_tax;
+    private Tax tax;
 }
