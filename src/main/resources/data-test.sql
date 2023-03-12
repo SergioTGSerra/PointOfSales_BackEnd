@@ -21,7 +21,12 @@ INSERT INTO public.tax (id, is_deleted, name, tax)
 VALUES (1, false, '1', 1);
 
 INSERT INTO public.products (id, is_active, is_deleted, name, price, stock, category_id, tax_id)
-VALUES (1, true, false, '1', 1, 1, 1, 1);
+VALUES (1, true, false, 'Kebab', 6.5, 1, 1, 1),
+       (2, true, false, 'Kebab Prato', 8.5, 1, 2, 1),
+       (3, true, false, 'Pizza Kebab', 10, 1, 3, 1),
+       (4, true, false, 'Coca-Cola', 2, 1, 4, 1);
+
+
 
 /*INSERT INTO entities (name, is_active, is_deleted, id_entity_type) VALUES
     ('Utilizador não autenticado', 1, 0, 1);*/
