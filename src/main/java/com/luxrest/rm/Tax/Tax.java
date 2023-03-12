@@ -13,12 +13,11 @@ public class Tax {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Tax is mandatory")
     private Double tax;
 
-    @NotNull
     private Boolean isDeleted;
 }
