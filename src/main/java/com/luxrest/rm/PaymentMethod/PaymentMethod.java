@@ -1,6 +1,8 @@
 package com.luxrest.rm.PaymentMethod;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -9,11 +11,15 @@ import lombok.Data;
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
-    private boolean is_active;
+    private Boolean isActive;
+
+    private Boolean isDeleted;
 }
