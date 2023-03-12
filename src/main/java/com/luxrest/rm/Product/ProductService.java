@@ -40,6 +40,8 @@ public class ProductService {
 
     @Transactional
     public ProductDTO createProduct(ProductDTO productDTO) {
+        if(productDTO.getId() != null)
+            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         Product product = productMapper.toEntity(productDTO);
         product.setCategory(categoryService.getCategoryById(productDTO.getCategoryId()));
         product.setTax(taxService.getTaxById(productDTO.getTaxId()));
@@ -55,7 +57,7 @@ public class ProductService {
         updateProduct.setPrice(productDTO.getPrice());
         updateProduct.setStock(productDTO.getStock());
         updateProduct.setIsActive(productDTO.getIsActive());
-        updateProduct.setIsDeleted(productDTO.getIsDeleted());
+        updateProduct.setIsDeleted(false);
         updateProduct.setCategory(categoryService.getCategoryById(productDTO.getCategoryId()));
         updateProduct.setTax(taxService.getTaxById(productDTO.getTaxId()));
         return productMapper.toDTO(productRepository.save(updateProduct));

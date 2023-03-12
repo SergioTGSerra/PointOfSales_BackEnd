@@ -15,7 +15,6 @@ public class ProductDTO {
     private Integer stock;
     @NotNull
     private Boolean isActive;
-    @NotNull
     private Boolean isDeleted;
     @NotNull(message = "Category id is mandatory")
     private Integer categoryId;
