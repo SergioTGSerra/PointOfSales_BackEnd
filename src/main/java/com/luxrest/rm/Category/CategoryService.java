@@ -19,7 +19,7 @@ public class CategoryService {
 
     public Category getCategoryById(Integer id){
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
     }
 
     public Category saveCategory(Category category){
