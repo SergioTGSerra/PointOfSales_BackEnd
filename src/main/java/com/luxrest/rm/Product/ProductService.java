@@ -39,6 +39,16 @@ public class ProductService {
     }
 
     @Transactional
+    public List<ProductDTO> getProductsByCategoryId(Integer categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+        if (products.isEmpty())
+            throw new EntityNotFoundException("No products found for category ID: " + categoryId);
+        return products.stream()
+                .map(productMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public ProductDTO createProduct(ProductDTO productDTO) {
         if(productDTO.getId() != null)
             throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
