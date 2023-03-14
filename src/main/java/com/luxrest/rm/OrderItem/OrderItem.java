@@ -4,7 +4,9 @@ import com.luxrest.rm.Order.Order;
 import com.luxrest.rm.Product.Product;
 import com.luxrest.rm.Tax.Tax;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -13,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
-    private OrderProductPK id;
+    private OrderItemPK id;
 
     private int quantity;
 
@@ -24,11 +26,11 @@ public class OrderItem {
 
     @Data
     @Embeddable
-    static class OrderProductPK implements Serializable {
-
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class OrderItemPK implements Serializable {
         @ManyToOne
         private Order order;
-
         @ManyToOne
         private Product product;
     }

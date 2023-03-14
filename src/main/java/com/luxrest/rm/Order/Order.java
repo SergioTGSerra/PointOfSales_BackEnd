@@ -1,12 +1,14 @@
 package com.luxrest.rm.Order;
 
 import com.luxrest.rm.Entity.Entity;
+import com.luxrest.rm.OrderItem.OrderItem;
 import com.luxrest.rm.OrderStatus.OrderStatus;
 import com.luxrest.rm.PaymentMethod.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @jakarta.persistence.Entity
@@ -14,28 +16,38 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private double ammount;
+    private Double ammount;
 
     private String orderNote;
 
+    private Boolean isDeleted;
+
+    @ManyToOne
+    private OrderStatus idSatus;
+
+    @ManyToOne
+    private PaymentMethod idPaymentMethod;
+
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems;
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.getId().setOrder(this);
+        }
+    }
+
+    //@ManyToOne
+    //private Entity createdBy;
+
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
-
-    private boolean is_deleted;
-
-    @ManyToOne
-    private OrderStatus id_satus;
-
-    @ManyToOne
-    private PaymentMethod id_payment_method;
-
-    @ManyToOne
-    private Entity created_by;
+    private Date createdAt;
 
     @PrePersist
     private void onCreate() {
-        created_at = new Date();
+        createdAt = new Date();
     }
 }
