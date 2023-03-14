@@ -1,9 +1,9 @@
 INSERT INTO entity_type (is_active, name) VALUES
-                                              ('1', 'Desconhecido'),
-                                              ('1', 'Cliente'),
-                                              ('1', 'Caixa'),
-                                              ('1', 'Cozinheiro'),
-                                              ('1', 'Gerente');
+                                      ('1', 'Desconhecido'),
+                                      ('1', 'Cliente'),
+                                      ('1', 'Caixa'),
+                                      ('1', 'Cozinheiro'),
+                                      ('1', 'Gerente');
 
 INSERT INTO order_status (name) VALUES
                                     ('Aguardar Pagamento'),
@@ -11,11 +11,12 @@ INSERT INTO order_status (name) VALUES
                                     ('Finalizado'),
                                     ('Cancelado');
 
-INSERT INTO categories (id, name, description, is_active) VALUES
-                                    (1, 'Sandes', 'Sandes', true),
-                                    (2, 'Pratos', 'Pratos', true),
-                                    (3, 'Pizzas', 'Pizzas', true),
-                                    (4, 'Bebidas', 'Bebidas', true);
+INSERT INTO categories (name, description, is_active) VALUES
+                                    ('Menus', 'Menus', true),
+                                    ('Sandes', 'Sandes', true),
+                                    ('Pratos', 'Pratos', true),
+                                    ('Pizzas', 'Pizzas', true),
+                                    ('Bebidas', 'Bebidas', true);
 
 INSERT INTO public.tax (id, is_deleted, name, tax)
 VALUES (1, false, '1', 1);
