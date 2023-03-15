@@ -1,17 +1,14 @@
 package com.luxrest.rm.OrderStatus;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
 public class OrderStatusService {
-
     private final OrderStatusRepository orderStatusRepository;
-    public OrderStatusService(OrderStatusRepository orderStatusRepository) {
-        this.orderStatusRepository = orderStatusRepository;
-    }
-
     public List<OrderStatus> getAllOrderStatus(){
         return orderStatusRepository.findAll();
     }
@@ -21,15 +18,17 @@ public class OrderStatusService {
                 .orElseThrow(() -> new EntityNotFoundException("Order Status not found: " + id));
     }
 
-    public OrderStatus saveOrderStatus(OrderStatus orderStatus){
+    public OrderStatus createOrderStatus(OrderStatus orderStatus){
+        if(orderStatus.getId() != null)
+            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         return orderStatusRepository.save(orderStatus);
     }
 
     public OrderStatus updateOrderStatus(Integer id, OrderStatus orderStatus){
-        OrderStatus existingOrderStatus = orderStatusRepository.findById(id)
+        orderStatusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order Status not found"));
-        existingOrderStatus.setName(orderStatus.getName());
-        return orderStatusRepository.save(existingOrderStatus);
+        orderStatus.setId(id);
+        return orderStatusRepository.save(orderStatus);
     }
 
     public OrderStatus deleteOrderStatus(Integer id){

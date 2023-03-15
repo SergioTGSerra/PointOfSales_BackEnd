@@ -1,9 +1,15 @@
 package com.luxrest.rm.Product;
 
+import com.luxrest.rm.Category.CategoryService;
+import com.luxrest.rm.Tax.TaxService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class ProductMapper {
+    private final CategoryService categoryService;
+    private final TaxService taxService;
     public ProductDTO toDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
@@ -24,6 +30,8 @@ public class ProductMapper {
         product.setStock(productDTO.getStock());
         product.setIsActive(productDTO.getIsActive());
         product.setIsDeleted(productDTO.getIsDeleted());
+        product.setCategory(categoryService.getCategoryById(productDTO.getCategoryId()));
+        product.setTax(taxService.getTaxById(productDTO.getTaxId()));
         return product;
     }
 }

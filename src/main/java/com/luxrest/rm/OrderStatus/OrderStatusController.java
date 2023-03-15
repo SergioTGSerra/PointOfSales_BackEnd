@@ -31,7 +31,7 @@ public class OrderStatusController {
 
     @PostMapping
     public OrderStatus saveOrderStatus(@RequestBody @Valid OrderStatus orderStatus){
-        return orderStatusService.saveOrderStatus(orderStatus);
+        return orderStatusService.createOrderStatus(orderStatus);
     }
 
     @PutMapping("/{id}")

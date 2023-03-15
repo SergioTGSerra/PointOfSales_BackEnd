@@ -20,5 +20,8 @@ public class Category {
     private String description;
 
     @NotNull
-    private Boolean is_active;
+    private Boolean isActive;
+
+    @NotNull
+    private Boolean isDeleted;
 }

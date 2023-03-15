@@ -1,6 +1,7 @@
 package com.luxrest.rm.PaymentMethod;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,15 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/v1/paymentMethods")
 public class PaymentMethodController {
-
     private final PaymentMethodService paymentMethodService;
-
-    public PaymentMethodController(PaymentMethodService paymentMethodService) {
-        this.paymentMethodService = paymentMethodService;
-    }
-
     @GetMapping
     public List<PaymentMethod> getAllPaymentMethods() {
         return paymentMethodService.getAllPaymentMethod();

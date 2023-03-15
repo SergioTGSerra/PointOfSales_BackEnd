@@ -31,12 +31,19 @@ public class CategoryController {
 
     @PostMapping
     public Category saveCategory(@RequestBody @Valid Category category){
+        if(category.getId() != null)
+            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         return categoryService.saveCategory(category);
     }
 
     @PutMapping("/{id}")
     public Category updateCategory(@PathVariable Integer id, @RequestBody @Valid Category category){
         return categoryService.updateCategory(id, category);
+    }
+
+    @DeleteMapping("/{id}")
+    public Category deleteCategory(@PathVariable Integer id){
+        return categoryService.deleteCategory(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

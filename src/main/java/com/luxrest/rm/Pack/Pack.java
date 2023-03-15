@@ -11,21 +11,21 @@ import lombok.Data;
 public class Pack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     private String name;
 
-    private double price;
+    private Double price;
 
-    private int stock;
+    private Integer stock;
 
-    private boolean is_active;
+    private Boolean isActive;
 
-    private boolean is_deleted;
-
-    @ManyToOne
-    private Category id_category;
+    private Boolean isDeleted;
 
     @ManyToOne
-    private Tax id_tax;
+    private Category idCategory;
+
+    @ManyToOne
+    private Tax idTax;
 }

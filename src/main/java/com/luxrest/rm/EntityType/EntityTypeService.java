@@ -22,15 +22,16 @@ public class EntityTypeService {
     }
 
     public EntityType createEntityType(EntityType entityType){
+        if(entityType.getId() != null)
+            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         return entityTypeRepository.save(entityType);
     }
 
     public EntityType updateEntityType(Integer id, EntityType entityType){
-        EntityType existingEntityType = entityTypeRepository.findById(id)
+        entityTypeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Entity Type not found"));
-        existingEntityType.setName(entityType.getName());
-        existingEntityType.setIsActive(entityType.getIsActive());
-        return entityTypeRepository.save(existingEntityType);
+        entityType.setId(id);
+        return entityTypeRepository.save(entityType);
     }
 
     public EntityType deleteEntityType(Integer id){
