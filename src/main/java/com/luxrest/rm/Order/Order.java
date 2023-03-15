@@ -30,18 +30,11 @@ public class Order {
     @ManyToOne
     private PaymentMethod idPaymentMethod;
 
-    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-        for (OrderItem orderItem : orderItems) {
-            orderItem.getId().setOrder(this);
-        }
-    }
-
-    //@ManyToOne
-    //private Entity createdBy;
+    @ManyToOne
+    private Entity createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

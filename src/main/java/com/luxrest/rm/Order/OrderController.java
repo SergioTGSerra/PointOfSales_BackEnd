@@ -1,6 +1,5 @@
 package com.luxrest.rm.Order;
 
-import com.luxrest.rm.Product.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,8 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDTO getOrderById(@PathVariable Long id){
-        return orderService.getOrderById(id);
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @PostMapping
@@ -31,11 +30,8 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(orderDTO));
     }
 
-    /*@PostMapping("/{orderId}/products")
-    public ResponseEntity<OrderDTO> addProductToOrder(@PathVariable Long orderId, @RequestBody ProductRequestDTO productRequestDTO) {
-        Order updatedOrder = orderService.addProductToOrder(orderId, productRequestDTO);
-        OrderResponseDTO orderResponseDTO = orderService.mapToOrderResponseDTO(updatedOrder);
-        return ResponseEntity.ok(orderResponseDTO);
-    }*/
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<OrderDTO> deleteOrder(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.deleteOrder(id));
+    }
 }

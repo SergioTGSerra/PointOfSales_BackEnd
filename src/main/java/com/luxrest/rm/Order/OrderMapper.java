@@ -13,7 +13,7 @@ public class OrderMapper {
         orderDTO.setIsDeleted(order.getIsDeleted());
         orderDTO.setIdStatus(order.getIdSatus().getId());
         orderDTO.setIdPaymentMethod(order.getIdPaymentMethod().getId());
-        //orderDTO.setCreatedBy(order.getCreatedBy().getId());
+        orderDTO.setCreatedBy(order.getCreatedBy().getId());
         orderDTO.setCreatedAt(order.getCreatedAt());
 
         return orderDTO;
@@ -23,6 +23,7 @@ public class OrderMapper {
 
         Order order = new Order();
 
+        order.setId(orderDTO.getId());
         order.setAmmount(orderDTO.getAmmount());
         order.setOrderNote(orderDTO.getOrderNote());
         order.setIsDeleted(orderDTO.getIsDeleted());
