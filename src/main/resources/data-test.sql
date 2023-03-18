@@ -11,12 +11,12 @@ INSERT INTO order_status (name) VALUES
                                     ('Finalizado'),
                                     ('Cancelado');
 
-INSERT INTO categories (name, description, is_active) VALUES
-                                    ('Menus', 'Menus', true),
-                                    ('Sandes', 'Sandes', true),
-                                    ('Pratos', 'Pratos', true),
-                                    ('Pizzas', 'Pizzas', true),
-                                    ('Bebidas', 'Bebidas', true);
+INSERT INTO categories (name, description, is_active, is_deleted) VALUES
+                                    ('Menus', 'Menus', true, false),
+                                    ('Sandes', 'Sandes', true, false),
+                                    ('Pratos', 'Pratos', true, false),
+                                    ('Pizzas', 'Pizzas', true, false),
+                                    ('Bebidas', 'Bebidas', true, false);
 
 INSERT INTO public.tax (id, is_deleted, name, tax)
 VALUES (1, false, '1', 1);
