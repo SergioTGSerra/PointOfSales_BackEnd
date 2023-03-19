@@ -1,4 +1,4 @@
-package com.luxrest.rm.Expenses;
+package com.luxrest.rm.Expense;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

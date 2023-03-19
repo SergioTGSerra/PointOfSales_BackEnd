@@ -1,4 +1,4 @@
-package com.luxrest.rm.Expenses;
+package com.luxrest.rm.Expense;
 
 import com.luxrest.rm.Entity.Entity;
 import jakarta.persistence.*;
@@ -10,12 +10,12 @@ import lombok.Data;
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String note;
 
-    private double amount;
+    private Double amount;
 
     @ManyToOne
-    private Entity id_entity;
+    private Entity createdBy;
 }
