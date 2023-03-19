@@ -1,6 +1,7 @@
 package com.luxrest.rm.EntityType;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,13 +13,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/entityType")
+@AllArgsConstructor
 public class EntityTypeController {
 
     private final EntityTypeService entityTypeService;
-
-    public EntityTypeController(EntityTypeService entityTypeService) {
-        this.entityTypeService = entityTypeService;
-    }
 
     @GetMapping
     public List<EntityType> getAllEntityTypes() {
