@@ -10,7 +10,7 @@ import lombok.Data;
 public class Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -26,9 +26,9 @@ public class Entity {
 
     private String zip_code;
 
-    private boolean is_active;
+    private Boolean isActive;
 
-    private boolean is_deleted;
+    private Boolean isDeleted;
 
     @ManyToOne
     private EntityType id_entity_type;
