@@ -1,24 +1,39 @@
 package com.luxrest.rm.PromotionProduct;
 
+import com.luxrest.rm.Entity.Entity;
 import com.luxrest.rm.Product.Product;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @jakarta.persistence.Entity
 @Table(name = "promotions_products")
 public class PromotionProduct {
     @Id
-    private PromotionProductPK id_product;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idPromotion;
 
-    private double price;
+    private Double price;
 
-    @Data
-    @Embeddable
-    static class PromotionProductPK implements Serializable {
-        @OneToOne
-        private Product id_product;
+    private Boolean isActive;
+
+    private Boolean isDeleted;
+
+    @ManyToOne
+    private Product product;
+
+    @ManyToOne
+    private Entity createdBy;
+
+    private Date finishedAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @PrePersist
+    private void onCreate() {
+        createdAt = new Date();
     }
 }
