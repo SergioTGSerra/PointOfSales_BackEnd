@@ -1,6 +1,7 @@
 package com.luxrest.rm.Category;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,14 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
     private final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @GetMapping
     public List<Category> getAllCategories() {
@@ -31,8 +29,6 @@ public class CategoryController {
 
     @PostMapping
     public Category saveCategory(@RequestBody @Valid Category category){
-        if(category.getId() != null)
-            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         return categoryService.saveCategory(category);
     }
 
