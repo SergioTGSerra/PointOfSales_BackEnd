@@ -1,6 +1,7 @@
 package com.luxrest.rm.OrderStatus;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,12 +13,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/orderStatus")
+@AllArgsConstructor
 public class OrderStatusController {
     private final OrderStatusService orderStatusService;
-
-    public OrderStatusController(OrderStatusService orderStatusService) {
-        this.orderStatusService = orderStatusService;
-    }
 
     @GetMapping
     public List<OrderStatus> getAllOrderStatus() {
