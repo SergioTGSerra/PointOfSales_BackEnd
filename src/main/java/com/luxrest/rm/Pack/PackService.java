@@ -31,7 +31,7 @@ public class PackService {
 
    @Transactional
     public List<PackDTO> getPacksByCategoryId(Integer categoryId) {
-        List<Pack> packs = packRepository.findByIdCategory(categoryId);
+        List<Pack> packs = packRepository.findByCategory_Id(categoryId);
         if (packs.isEmpty())
             throw new EntityNotFoundException("No packs found for category ID: " + categoryId);
         return packs.stream()
@@ -44,8 +44,7 @@ public class PackService {
         if(packDTO.getId() != null)
             throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
         Pack pack = packMapper.toEntity(packDTO);
-        Pack createdPack = packRepository.save(pack);
-        return packMapper.toDTO(createdPack);
+        return packMapper.toDTO(packRepository.save(pack));
     }
 
     @Transactional

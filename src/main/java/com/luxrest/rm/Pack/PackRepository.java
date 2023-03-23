@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface PackRepository extends JpaRepository<Pack, Integer> {
-    List<Pack> findByIdCategory(Integer categoryId);
+    List<Pack> findByCategory_Id(Integer categoryId);
 }

@@ -24,7 +24,7 @@ public class Pack {
     private Boolean isDeleted;
 
     @ManyToOne
-    private Category idCategory;
+    private Category category;
 
     @ManyToOne
     private Tax idTax;

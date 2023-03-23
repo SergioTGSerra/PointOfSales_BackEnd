@@ -2,19 +2,16 @@ package com.luxrest.rm.Pack;
 
 import com.luxrest.rm.Category.CategoryService;
 import com.luxrest.rm.Tax.TaxService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class PackMapper {
 
     private final CategoryService categoryService;
 
     private final TaxService taxService;
-
-    public PackMapper(CategoryService categoryService, TaxService taxService) {
-        this.categoryService = categoryService;
-        this.taxService = taxService;
-    }
 
     public PackDTO toDTO(Pack pack){
         PackDTO packDTO = new PackDTO();
@@ -24,7 +21,7 @@ public class PackMapper {
         packDTO.setPrice(pack.getPrice());
         packDTO.setIs_active(pack.getIsActive());
         packDTO.setIs_deleted(pack.getIsDeleted());
-        packDTO.setIdCategory(pack.getIdCategory().getId());
+        packDTO.setIdCategory(pack.getCategory().getId());
         packDTO.setIdTax(pack.getIdTax().getId());
         return packDTO;
     }
@@ -36,7 +33,7 @@ public class PackMapper {
         pack.setPrice(packDTO.getPrice());
         pack.setIsActive(packDTO.getIs_active());
         pack.setIsDeleted(packDTO.getIs_deleted());
-        pack.setIdCategory(categoryService.getCategoryById(packDTO.getIdCategory()));
+        pack.setCategory(categoryService.getCategoryById(packDTO.getIdCategory()));
         pack.setIdTax(taxService.getTaxById(packDTO.getIdTax()));
         return pack;
     }
