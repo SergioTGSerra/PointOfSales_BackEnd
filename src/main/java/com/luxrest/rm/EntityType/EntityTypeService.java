@@ -1,16 +1,14 @@
 package com.luxrest.rm.EntityType;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
 public class EntityTypeService {
     private final EntityTypeRepository entityTypeRepository;
-
-    public EntityTypeService(EntityTypeRepository entityTypeRepository) {
-        this.entityTypeRepository = entityTypeRepository;
-    }
 
     public List<EntityType> getAllEntityType(){
         return entityTypeRepository.findAll();
