@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 public class ProductDTO {
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "Name is mandatory")
     private String name;
-    @NotNull
+    @NotNull(message = "Price is mandatory")
     private Double price;
-    @NotNull
+    @NotNull(message = "Stock is mandatory")
     private Integer stock;
     @NotNull
     private Boolean isActive;
