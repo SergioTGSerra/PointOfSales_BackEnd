@@ -38,12 +38,14 @@ public class OrderService {
         Order order = orderMapper.toEntity(orderDTO);
         order.setIsDeleted(false);
 
-        List<Product> products = productRepository.findAllById(orderDTO.getProductQuantity().keySet());
+        //Get Products
+        List<Product> products = productRepository.findAllById(orderDTO.getOrderLine().keySet());
         List<OrderItem> orderItems = new ArrayList<>();
         for (Product product : products) {
             OrderItem orderItem = new OrderItem();
             orderItem.setId(new OrderItem.OrderItemPK(order, product));
-            orderItem.setQuantity(orderDTO.getProductQuantity().get(product.getId()));
+            //Get Quantity of this product
+            orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
             orderItem.setPrice(product.getPrice());
             orderItem.setId_tax(product.getTax());
             orderItems.add(orderItem);

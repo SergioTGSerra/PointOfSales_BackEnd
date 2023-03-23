@@ -28,5 +28,5 @@ public class OrderDTO {
     private Date createdAt;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
-    private Map<Integer, Integer> productQuantity;
+    private Map<Integer, Integer> orderLine; //Prodcut Quantity
 }
