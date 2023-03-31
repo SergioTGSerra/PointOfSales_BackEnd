@@ -27,7 +27,7 @@
            (3, true, false, 'Pizza Kebab', 10, 1, 3, 1),
            (4, true, false, 'Coca-Cola', 2, 1, 4, 1);
 
-    INSERT INTO public.packs (id, is_active, is_deleted, name, price, stock, id_category_id, id_tax_id)
+    INSERT INTO public.packs (id, is_active, is_deleted, name, price, stock, category_id, id_tax_id)
     VALUES (1, true, false, 'Kebab', 6.5, 1, 1, 1),
            (2, true, false, 'Kebab Prato', 8.5, 1, 2, 1),
            (3, true, false, 'Pizza Kebab', 10, 1, 3, 1),
@@ -38,6 +38,12 @@
            (2, 'rua do alcazar', 'Barcelos', 'sergio@gmail', 2, true, false, 'Sergio', 931234567, 4905-020, 3),
            (3, 'rua da viana', 'Viana', 'andre@gmail', 3, true, false, 'Andre', 969876543, 4905-013, 4),
            (4, 'rua de deucriste', 'Deucriste', 'pedro@gmail', 4, true, false, 'Pedro', 965656567, 4905-201, 2);
+
+    INSERT INTO public.payment_methods(id, description, is_active, is_deleted, name)
+    VALUES(1, 'pagamento a dinheiro', true, false, 'dinheiro');
+
+    INSERT INTO public.orders (id, ammount, created_at, is_deleted, order_note, created_by_id, id_payment_method_id, id_satus_id)
+    VALUES (1, 10, current_timestamp, false, 'primeira order', 1, 1, 1);
 
 
 /*INSERT INTO entities (name, is_active, is_deleted, id_entity_type) VALUES
