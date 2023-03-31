@@ -43,13 +43,15 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
         for (Product product : products) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setId(new OrderItem.OrderItemPK(order, product));
+            orderItem.setOrder(order);
+            orderItem.setProduct(product);
             //Get Quantity of this product
             orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
             orderItem.setPrice(product.getPrice());
             orderItem.setId_tax(product.getTax());
             orderItems.add(orderItem);
         }
+        //Está feito para o produto fazer para o pack
         order.setOrderItems(orderItems);
         return orderMapper.toDTO(orderRepository.save(order));
     }
