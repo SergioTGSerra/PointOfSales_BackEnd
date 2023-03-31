@@ -1,4 +1,4 @@
-package com.luxrest.rm.PromotionProduct;
+package com.luxrest.rm.Promotion;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class PromotionProductDTO {
+public class PromotionDTO {
 
     private Integer idPromotion;
 
@@ -18,8 +18,9 @@ public class PromotionProductDTO {
 
     private Boolean isDeleted;
 
-    @NotNull(message = "Product id is mandatory")
     private Integer idProduct;
+
+    private Integer idPack;
 
     @NotNull(message = "Entity id is mandatory")
     private Long createdBy;
