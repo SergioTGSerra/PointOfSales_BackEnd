@@ -48,7 +48,7 @@ public class OrderService {
             //Get Quantity of this product
             orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
             orderItem.setPrice(product.getPrice());
-            orderItem.setId_tax(product.getTax());
+            orderItem.setTax(product.getTax());
             orderItems.add(orderItem);
         }
         //Está feito para o produto fazer para o pack

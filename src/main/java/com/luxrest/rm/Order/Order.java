@@ -30,7 +30,7 @@ public class Order {
     @ManyToOne
     private PaymentMethod idPaymentMethod;
 
-    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @ManyToOne

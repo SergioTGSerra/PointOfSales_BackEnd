@@ -14,6 +14,7 @@ import java.util.Date;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer quantity;
@@ -21,7 +22,7 @@ public class OrderItem {
     private Double price;
 
     @ManyToOne
-    private Tax id_tax;
+    private Tax tax;
 
     @ManyToOne
     private Product product;
