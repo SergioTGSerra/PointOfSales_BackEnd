@@ -5,6 +5,7 @@ import com.luxrest.rm.Config.JwtService;
 import com.luxrest.rm.Entity.Entity;
 import com.luxrest.rm.Entity.EntityRepository;
 import com.luxrest.rm.Entity.EntityType;
+import com.luxrest.rm.ErrorsHandler.AlreadyExistsException;
 import com.luxrest.rm.Token.Token;
 import com.luxrest.rm.Token.TokenRepository;
 import com.luxrest.rm.Token.TokenType;
@@ -30,7 +31,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         if(entityRepository.existsByUsername(request.getUsername()) && entityRepository.existsByEmail(request.getEmail()))
-            throw new UserAlreadyExistsException("User Already Exists");
+            throw new AlreadyExistsException("User Already Exists");
         var user = Entity.builder()
                 .name(request.getName())
                 .username(request.getUsername())
