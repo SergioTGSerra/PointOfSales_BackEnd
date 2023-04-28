@@ -38,5 +38,4 @@ public class TaxController {
     public Tax deleteTax(@PathVariable Integer id){
         return taxService.deleteTax(id);
     }
-
 }
