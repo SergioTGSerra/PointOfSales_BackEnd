@@ -1,38 +1,19 @@
 package com.luxrest.rm.PaymentMethod;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
-@RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/paymentMethods")
+@RestController
+@RequestMapping("/api/v1/payment-methods")
 public class PaymentMethodController {
-    private final PaymentMethodService paymentMethodService;
     @GetMapping
-    public List<PaymentMethod> getAllPaymentMethods() {
-        return paymentMethodService.getAllPaymentMethod();
-    }
-
-    @GetMapping("/{id}")
-    public PaymentMethod getPaymentMethodById(@PathVariable Integer id){
-        return paymentMethodService.getPaymentMethodById(id);
-    }
-
-    @PostMapping
-    public PaymentMethod createPaymentMethod(@RequestBody @Valid PaymentMethod paymentMethod){
-        return paymentMethodService.createPaymentMethod(paymentMethod);
-    }
-
-    @PutMapping("/{id}")
-    public PaymentMethod updatePaymentMethod(@PathVariable Integer id, @RequestBody @Valid PaymentMethod paymentMethod){
-        return paymentMethodService.updatePaymentMethod(id, paymentMethod);
-    }
-
-    @DeleteMapping("/{id}")
-    public PaymentMethod deletePaymentMethod(@PathVariable Integer id){
-        return paymentMethodService.deletePaymentMethod(id);
+    public List<Payment_Method> getPaymentMethods() {
+        return Arrays.asList(Payment_Method.values());
     }
 }
