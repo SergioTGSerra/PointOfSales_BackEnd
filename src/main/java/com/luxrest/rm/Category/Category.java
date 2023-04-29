@@ -2,8 +2,9 @@ package com.luxrest.rm.Category;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @jakarta.persistence.Entity
@@ -19,9 +20,21 @@ public class Category {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @NotNull
     private Boolean isActive;
 
-    @NotNull
     private Boolean isDeleted;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+        if(this.isActive == null){
+            this.isActive = true;
+        }
+    }
 }
