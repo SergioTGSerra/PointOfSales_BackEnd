@@ -14,7 +14,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream()
                 .map(productMapper::toDTO)
@@ -22,14 +22,14 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO getProductById(Integer id){
+    public ProductResponse getProductById(Integer id){
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"+ id));
         return productMapper.toDTO(product);
     }
 
     @Transactional
-    public List<ProductDTO> getProductsByCategoryId(Integer categoryId) {
+    public List<ProductResponse> getProductsByCategoryId(Integer categoryId) {
         List<Product> products = productRepository.findByCategoryId(categoryId);
         return products.stream()
                 .map(productMapper::toDTO)
@@ -37,24 +37,21 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        if(productDTO.getId() != null)
-            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
-        Product product = productMapper.toEntity(productDTO);
+    public ProductResponse createProduct(ProductRequest productRequest) {
+        Product product = productMapper.toEntity(productRequest);
         return productMapper.toDTO(productRepository.save(product));
     }
 
     @Transactional
-    public ProductDTO updateProduct(Integer id, ProductDTO productDTO){
+    public ProductResponse updateProduct(Integer id, ProductRequest productRequest){
         productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"+ id));
-        Product product = productMapper.toEntity(productDTO);
-        product.setId(id);
+        Product product = productMapper.toEntity(productRequest);
         return productMapper.toDTO(productRepository.save(product));
     }
 
     @Transactional
-    public ProductDTO deleteProduct(Integer id){
+    public ProductResponse deleteProduct(Integer id){
         Product deletedProduct = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found" + id));
         deletedProduct.setIsDeleted(true);

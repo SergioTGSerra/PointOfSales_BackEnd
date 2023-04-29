@@ -5,19 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class ProductDTO {
-    private Integer id;
+public class ProductRequest {
     @NotBlank(message = "Name is mandatory")
     private String name;
     @NotNull(message = "Price is mandatory")
     private Double price;
     @NotNull(message = "Stock is mandatory")
     private Integer stock;
-    @NotNull
     private Boolean isActive;
-    private Boolean isDeleted;
     @NotNull(message = "Category id is mandatory")
-    private Integer categoryId;
+    private Integer category;
     @NotNull(message = "Tax id is mandatory")
-    private Integer taxId;
+    private Integer tax;
 }

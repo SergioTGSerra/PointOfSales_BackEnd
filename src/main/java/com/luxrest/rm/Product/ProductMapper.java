@@ -10,28 +10,26 @@ import org.springframework.stereotype.Component;
 public class ProductMapper {
     private final CategoryService categoryService;
     private final TaxService taxService;
-    public ProductDTO toDTO(Product product) {
-        ProductDTO productDTO = new ProductDTO();
+    public ProductResponse toDTO(Product product) {
+        ProductResponse productDTO = new ProductResponse();
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
         productDTO.setStock(product.getStock());
         productDTO.setIsActive(product.getIsActive());
-        productDTO.setIsDeleted(product.getIsDeleted());
-        productDTO.setCategoryId(product.getCategory().getId());
-        productDTO.setTaxId(product.getTax().getId());
+        productDTO.setCategory(String.valueOf(product.getCategory().getId()));
+        productDTO.setTax(Double.valueOf(product.getTax().getId()));
         return productDTO;
     }
 
-    public Product toEntity(ProductDTO productDTO) {
+    public Product toEntity(ProductRequest productRequest) {
         Product product = new Product();
-        product.setName(productDTO.getName());
-        product.setPrice(productDTO.getPrice());
-        product.setStock(productDTO.getStock());
-        product.setIsActive(productDTO.getIsActive());
-        product.setIsDeleted(productDTO.getIsDeleted());
-        product.setCategory(categoryService.getCategoryById(productDTO.getCategoryId()));
-        product.setTax(taxService.getTaxById(productDTO.getTaxId()));
+        product.setName(productRequest.getName());
+        product.setPrice(productRequest.getPrice());
+        product.setStock(productRequest.getStock());
+        product.setIsActive(productRequest.getIsActive());
+        product.setCategory(categoryService.getCategoryById(productRequest.getCategory()));
+        product.setTax(taxService.getTaxById(productRequest.getTax()));
         return product;
     }
 }

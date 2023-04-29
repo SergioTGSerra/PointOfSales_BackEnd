@@ -13,27 +13,27 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
     @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable Integer id){
+    public ProductResponse getProductById(@PathVariable Integer id){
         return productService.getProductById(id);
     }
     @GetMapping("/category/{id}")
-    public ResponseEntity<List<ProductDTO>> getProductByCategoryId(@PathVariable Integer id){
+    public ResponseEntity<List<ProductResponse>> getProductByCategoryId(@PathVariable Integer id){
         return  ResponseEntity.ok(productService.getProductsByCategoryId(id));
     }
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody @Valid ProductDTO productDTO) {
-        return ResponseEntity.ok(productService.createProduct(productDTO));
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+        return ResponseEntity.ok(productService.createProduct(productRequest));
     }
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable Integer id, @RequestBody @Valid ProductDTO productDTO){
-        return productService.updateProduct(id, productDTO);
+    public ProductResponse updateProduct(@PathVariable Integer id, @RequestBody @Valid ProductRequest productRequest){
+        return productService.updateProduct(id, productRequest);
     }
     @DeleteMapping("/{id}")
-    public ProductDTO deleteProduct(@PathVariable Integer id){
+    public ProductResponse deleteProduct(@PathVariable Integer id){
         return productService.deleteProduct(id);
     }
 
