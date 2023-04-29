@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class PromotionDTO {
 
-    private Integer idPromotion;
+    private Integer id;
 
     @NotNull
     private Double price;

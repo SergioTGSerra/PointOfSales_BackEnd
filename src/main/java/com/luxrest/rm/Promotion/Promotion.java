@@ -14,7 +14,7 @@ import java.util.Date;
 public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPromotion;
+    private Integer id;
 
     private Double price;
 

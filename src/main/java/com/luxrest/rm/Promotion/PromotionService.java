@@ -56,7 +56,7 @@ public class PromotionService {
         promotionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Promotion not found"+ id));
         Promotion promotion = promotionMapper.toEntity(promotionDTO);
-        promotion.setIdPromotion(id);
+        promotion.setId(id);
         return promotionMapper.toDTO(promotionRepository.save(promotion));
     }
 
