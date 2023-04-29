@@ -15,32 +15,32 @@ public class PackController {
     private final PackService packService;
 
     @GetMapping
-    public ResponseEntity<List<PackDTO>> getAllPacks(){
+    public ResponseEntity<List<PackResponse>> getAllPacks(){
         return ResponseEntity.ok(packService.getAllPacks());
     }
 
     @GetMapping("/{id}")
-    public PackDTO getPackById(@PathVariable Integer id){
+    public PackResponse getPackById(@PathVariable Integer id){
         return packService.getPackById(id);
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<List<PackDTO>> getPacksByIdCategory(@PathVariable Integer id){
+    public ResponseEntity<List<PackResponse>> getPacksByIdCategory(@PathVariable Integer id){
         return ResponseEntity.ok(packService.getPacksByCategoryId(id));
     }
 
     @PostMapping
-    public ResponseEntity<PackDTO> createPack(@RequestBody @Valid PackDTO packDTO) {
-        return ResponseEntity.ok(packService.createPack(packDTO));
+    public ResponseEntity<PackResponse> createPack(@RequestBody @Valid PackRequest packRequest) {
+        return ResponseEntity.ok(packService.createPack(packRequest));
     }
 
     @PutMapping("/{id}")
-    public PackDTO updatePack(@PathVariable Integer id, @RequestBody @Valid PackDTO packDTO){
-        return packService.updatePack(id, packDTO);
+    public PackResponse updatePack(@PathVariable Integer id, @RequestBody @Valid PackRequest packRequest){
+        return packService.updatePack(id, packRequest);
     }
 
     @DeleteMapping("/{id}")
-    public PackDTO deletePack(@PathVariable Integer id){
+    public PackResponse deletePack(@PathVariable Integer id){
         return packService.deletePack(id);
     }
 }

@@ -1,40 +1,41 @@
 package com.luxrest.rm.Pack;
 
 import com.luxrest.rm.Category.CategoryService;
-import com.luxrest.rm.Tax.TaxService;
+import com.luxrest.rm.PackProduct.PackProduct;
+import com.luxrest.rm.PackProduct.PackProductDTO;
+import com.luxrest.rm.Product.ProductMapper;
+import com.luxrest.rm.Product.ProductRepository;
+import com.luxrest.rm.Product.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class PackMapper {
 
     private final CategoryService categoryService;
+    private final ProductRepository productRepository;
 
-    private final TaxService taxService;
-
-    public PackDTO toDTO(Pack pack){
-        PackDTO packDTO = new PackDTO();
-        packDTO.setId(pack.getId());
-        packDTO.setName(pack.getName());
-        packDTO.setStock(pack.getStock());
-        packDTO.setPrice(pack.getPrice());
-        packDTO.setIs_active(pack.getIsActive());
-        packDTO.setIs_deleted(pack.getIsDeleted());
-        packDTO.setIdCategory(pack.getCategory().getId());
-        packDTO.setIdTax(pack.getIdTax().getId());
-        return packDTO;
+    public PackResponse toDTO(Pack pack){
+        PackResponse packResponse = new PackResponse();
+        packResponse.setId(pack.getId());
+        packResponse.setName(pack.getName());
+        packResponse.setStock(pack.getStock());
+        packResponse.setIsActive(pack.getIsActive());
+        packResponse.setCategory(String.valueOf(pack.getCategory().getName()));
+//        packResponse.setPackLine(pack.getPackLine());
+        return packResponse;
     }
 
-    public Pack toEntity(PackDTO packDTO){
+    public Pack toEntity(PackRequest packRequest){
         Pack pack = new Pack();
-        pack.setName(packDTO.getName());
-        pack.setStock(packDTO.getStock());
-        pack.setPrice(packDTO.getPrice());
-        pack.setIsActive(packDTO.getIs_active());
-        pack.setIsDeleted(packDTO.getIs_deleted());
-        pack.setCategory(categoryService.getCategoryById(packDTO.getIdCategory()));
-        pack.setIdTax(taxService.getTaxById(packDTO.getIdTax()));
+        pack.setName(packRequest.getName());
+        pack.setStock(packRequest.getStock());
+        pack.setIsActive(packRequest.getIsActive());
+        pack.setCategory(categoryService.getCategoryById(packRequest.getCategory()));
         return pack;
     }
 }

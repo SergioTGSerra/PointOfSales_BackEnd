@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 @jakarta.persistence.Entity
@@ -14,9 +15,11 @@ public class PackProduct {
     @Id
     private PackProductPK id;
 
+    private Double price;
+
     @Data
     @Embeddable
-    static class PackProductPK implements Serializable {
+    public static class PackProductPK implements Serializable {
 
         @ManyToOne
         private Pack pack;
