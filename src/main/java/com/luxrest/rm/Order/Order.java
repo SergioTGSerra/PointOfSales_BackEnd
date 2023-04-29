@@ -2,8 +2,8 @@ package com.luxrest.rm.Order;
 
 import com.luxrest.rm.Entity.Entity;
 import com.luxrest.rm.OrderItem.OrderItem;
-import com.luxrest.rm.OrderStatus.OrderStatus;
-import com.luxrest.rm.PaymentMethod.PaymentMethod;
+import com.luxrest.rm.OrderStatus.Order_Status;
+import com.luxrest.rm.PaymentMethod.Payment_Method;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,17 +18,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double ammount;
+    private Double amount;
 
     private String orderNote;
 
     private Boolean isDeleted;
 
-    @ManyToOne
-    private OrderStatus idSatus;
+    @Enumerated(EnumType.STRING)
+    private Order_Status orderStatus;
 
-    @ManyToOne
-    private PaymentMethod idPaymentMethod;
+    @Enumerated(EnumType.STRING)
+    private Payment_Method paymentMethod;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;

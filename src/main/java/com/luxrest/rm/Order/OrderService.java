@@ -39,20 +39,20 @@ public class OrderService {
         order.setIsDeleted(false);
 
         //Get Products
-        List<Product> products = productRepository.findAllById(orderDTO.getOrderLine().keySet());
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (Product product : products) {
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-            orderItem.setProduct(product);
-            //Get Quantity of this product
-            orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
-            orderItem.setPrice(product.getPrice());
-            orderItem.setTax(product.getTax());
-            orderItems.add(orderItem);
-        }
-        //Está feito para o produto fazer para o pack
-        order.setOrderItems(orderItems);
+//        List<Product> products = productRepository.findAllById(orderDTO.getOrderProductLine());
+//        List<OrderItem> orderItems = new ArrayList<>();
+//        for (Product product : products) {
+//            OrderItem orderItem = new OrderItem();
+//            orderItem.setOrder(order);
+//            orderItem.setProduct(product);
+//            //Get Quantity of this product
+//            orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
+//            orderItem.setPrice(product.getPrice());
+//            orderItem.setTax(product.getTax());
+//            orderItems.add(orderItem);
+//        }
+//        //Está feito para o produto fazer para o pack
+//        order.setOrderItems(orderItems);
         return orderMapper.toDTO(orderRepository.save(order));
     }
 
