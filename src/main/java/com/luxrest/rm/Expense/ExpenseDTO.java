@@ -2,6 +2,8 @@ package com.luxrest.rm.Expense;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class ExpenseDTO {
 
@@ -11,5 +13,7 @@ public class ExpenseDTO {
 
     private Double amount;
 
-    private Long createdBy;
+    private String createdBy;
+
+    private Date createdAt;
 }

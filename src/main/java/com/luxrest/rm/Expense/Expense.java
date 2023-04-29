@@ -4,6 +4,8 @@ import com.luxrest.rm.Entity.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @jakarta.persistence.Entity
 @Table(name = "expenses")
@@ -18,4 +20,12 @@ public class Expense {
 
     @ManyToOne
     private Entity createdBy;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @PrePersist
+    private void onCreate() {
+        createdAt = new Date();
+    }
 }
