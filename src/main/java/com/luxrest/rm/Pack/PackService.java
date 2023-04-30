@@ -50,21 +50,10 @@ public class PackService {
         Pack pack = packMapper.toEntity(packRequest);
         Pack createdPack = packRepository.save(pack);
 
-        List<PackProduct> packProducts = new ArrayList<>();
-
-        for (PackProductDTO packProductDTO : packRequest.getPackLine()){
-            PackProduct packProduct = new PackProduct();
-            PackProduct.PackProductPK packProductPK = new PackProduct.PackProductPK();
-            packProductPK.setPack(createdPack);
-            Product product = productRepository.findById(packProductDTO.getProduct())
-                    .orElseThrow(() -> new EntityNotFoundException("Product not found"+ packProductDTO.getProduct()));
-            packProductPK.setProduct(product);
-            packProduct.setId(packProductPK);
-            packProduct.setPrice(packProductDTO.getPrice());
-            packProducts.add(packProduct);
+        for(PackProduct packProduct : pack.getPackLine()){
+            packProduct.getId().setPack(createdPack);
         }
 
-        createdPack.setPackLine(packProducts);
         packRepository.save(createdPack);
 
         return packMapper.toDTO(createdPack);

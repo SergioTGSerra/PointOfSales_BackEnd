@@ -3,7 +3,9 @@ package com.luxrest.rm.Pack;
 import com.luxrest.rm.Category.CategoryService;
 import com.luxrest.rm.PackProduct.PackProduct;
 import com.luxrest.rm.PackProduct.PackProductDTO;
+import com.luxrest.rm.Product.Product;
 import com.luxrest.rm.Product.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,23 @@ public class PackMapper {
         pack.setStock(packRequest.getStock());
         pack.setIsActive(packRequest.getIsActive());
         pack.setCategory(categoryService.getCategoryById(packRequest.getCategory()));
+
+        List<PackProduct> packProducts = new ArrayList<>();
+
+        for (PackProductDTO packProductDTO : packRequest.getPackLine()){
+            PackProduct packProduct = new PackProduct();
+            PackProduct.PackProductPK packProductPK = new PackProduct.PackProductPK();
+            Product product = productRepository.findById(packProductDTO.getProduct())
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found"+ packProductDTO.getProduct()));
+            packProductPK.setProduct(product);
+            packProduct.setId(packProductPK);
+            packProduct.setPrice(packProductDTO.getPrice());
+            packProducts.add(packProduct);
+        }
+
+        pack.setPackLine(packProducts);
+
+
         return pack;
     }
 }
