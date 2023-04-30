@@ -3,9 +3,7 @@ package com.luxrest.rm.Pack;
 import com.luxrest.rm.Category.CategoryService;
 import com.luxrest.rm.PackProduct.PackProduct;
 import com.luxrest.rm.PackProduct.PackProductDTO;
-import com.luxrest.rm.Product.ProductMapper;
 import com.luxrest.rm.Product.ProductRepository;
-import com.luxrest.rm.Product.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +24,18 @@ public class PackMapper {
         packResponse.setStock(pack.getStock());
         packResponse.setIsActive(pack.getIsActive());
         packResponse.setCategory(String.valueOf(pack.getCategory().getName()));
-//        packResponse.setPackLine(pack.getPackLine());
+
+        List<PackProductDTO> packProducts = new ArrayList<>();
+
+        for (PackProduct packProduct : pack.getPackLine()){
+            PackProductDTO packProductDTO = new PackProductDTO();
+            packProductDTO.setProduct(packProduct.getId().getProduct().getId());
+            packProductDTO.setPrice(packProduct.getPrice());
+            packProducts.add(packProductDTO);
+        }
+
+        packResponse.setPackLine(packProducts);
+
         return packResponse;
     }
 
