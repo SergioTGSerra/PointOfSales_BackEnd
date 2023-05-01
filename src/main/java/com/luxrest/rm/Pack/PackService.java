@@ -1,15 +1,11 @@
 package com.luxrest.rm.Pack;
 
 import com.luxrest.rm.PackProduct.PackProduct;
-import com.luxrest.rm.PackProduct.PackProductDTO;
-import com.luxrest.rm.Product.Product;
-import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +15,6 @@ public class PackService {
 
     private final PackRepository packRepository;
     private final PackMapper packMapper;
-    private final ProductRepository productRepository;
 
     public List<PackResponse> getAllPacks(){
         List<Pack> packs = packRepository.findAll();
@@ -64,6 +59,11 @@ public class PackService {
         packRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pack not found"+ id));
         Pack pack = packMapper.toEntity(packRequest);
+
+        for(PackProduct packProduct : pack.getPackLine()){
+            packProduct.getId().setPack(pack);
+        }
+
         pack.setId(id);
         return packMapper.toDTO(packRepository.save(pack));
     }
