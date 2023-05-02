@@ -22,9 +22,6 @@ public class PromotionDTO {
 
     private Integer idPack;
 
-    @NotNull(message = "Entity id is mandatory")
-    private Long createdBy;
-
     private Date finishedAt;
 
     @NotNull
