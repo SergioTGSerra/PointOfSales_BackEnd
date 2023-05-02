@@ -18,7 +18,7 @@ public class Tax {
     private String name;
 
     @NotNull(message = "Tax is mandatory")
-    private Double tax;
+    private Double value;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Boolean isDeleted;
