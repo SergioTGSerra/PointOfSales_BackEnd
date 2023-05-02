@@ -1,14 +1,12 @@
 package com.luxrest.rm.Order;
 
-import com.luxrest.rm.OrderItem.OrderItem;
-import com.luxrest.rm.Product.Product;
+import com.luxrest.rm.OrderLine.OrderLine;
 import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,24 +34,15 @@ public class OrderService {
     @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO) {
         Order order = orderMapper.toEntity(orderDTO);
-        order.setIsDeleted(false);
 
-        //Get Products
-//        List<Product> products = productRepository.findAllById(orderDTO.getOrderProductLine());
-//        List<OrderItem> orderItems = new ArrayList<>();
-//        for (Product product : products) {
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setOrder(order);
-//            orderItem.setProduct(product);
-//            //Get Quantity of this product
-//            orderItem.setQuantity(orderDTO.getOrderLine().get(product.getId()));
-//            orderItem.setPrice(product.getPrice());
-//            orderItem.setTax(product.getTax());
-//            orderItems.add(orderItem);
-//        }
-//        //Está feito para o produto fazer para o pack
-//        order.setOrderItems(orderItems);
-        return orderMapper.toDTO(orderRepository.save(order));
+        Order createdOrder = orderRepository.save(order);
+
+        for(OrderLine orderLine : createdOrder.getOrderLine())
+            orderLine.setOrder(createdOrder);
+
+        createdOrder = orderRepository.save(createdOrder);
+
+        return orderMapper.toDTO(createdOrder);
     }
 
     @Transactional

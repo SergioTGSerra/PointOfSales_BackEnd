@@ -1,4 +1,4 @@
-package com.luxrest.rm.OrderItem;
+package com.luxrest.rm.OrderLine;
 
 import com.luxrest.rm.Order.Order;
 import com.luxrest.rm.Pack.Pack;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @jakarta.persistence.Entity
 @Table(name = "order_items")
-public class OrderItem {
+public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +21,7 @@ public class OrderItem {
 
     private Double price;
 
-    @ManyToOne
-    private Tax tax;
+    private Double tax;
 
     @ManyToOne
     private Product product;

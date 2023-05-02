@@ -1,24 +1,34 @@
 package com.luxrest.rm.Order;
 
-import com.luxrest.rm.Entity.EntityService;
+import com.luxrest.rm.OrderLine.OrderLine;
+import com.luxrest.rm.OrderLine.OrderLineDTO;
+import com.luxrest.rm.OrderLine.OrderLineMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class OrderMapper {
-    private final EntityService entityService;
+
+    private final OrderLineMapper orderLineMapper;
+
     public OrderDTO toDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
 
         orderDTO.setId(order.getId());
-        orderDTO.setAmmount(order.getAmount());
+        orderDTO.setAmount(order.getAmount());
         orderDTO.setOrderNote(order.getOrderNote());
-        orderDTO.setIsDeleted(order.getIsDeleted());
         orderDTO.setOrderStatus(order.getOrderStatus());
         orderDTO.setPaymentMethod(order.getPaymentMethod());
-        orderDTO.setCreatedBy(order.getCreatedBy().getId());
-        orderDTO.setCreatedAt(order.getCreatedAt());
+
+        List<OrderLineDTO> orderLineDTOList = new ArrayList<>();
+        for(OrderLine orderLine : order.getOrderLine())
+            orderLineDTOList.add(orderLineMapper.toDTO(orderLine));
+
+        orderDTO.setOrderLine(orderLineDTOList);
 
         return orderDTO;
     }
@@ -27,12 +37,16 @@ public class OrderMapper {
 
         Order order = new Order();
 
-        order.setId(orderDTO.getId());
-        order.setAmount(orderDTO.getAmmount());
+        order.setAmount(orderDTO.getAmount());
         order.setOrderNote(orderDTO.getOrderNote());
-        order.setIsDeleted(orderDTO.getIsDeleted());
         order.setOrderStatus(orderDTO.getOrderStatus());
         order.setPaymentMethod(orderDTO.getPaymentMethod());
+
+        List<OrderLine> orderLine = new ArrayList<>();
+        for(OrderLineDTO orderLineDTO : orderDTO.getOrderLine())
+            orderLine.add(orderLineMapper.toEntity(orderLineDTO));
+
+        order.setOrderLine(orderLine);
 
         return order;
     }
