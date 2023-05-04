@@ -6,6 +6,8 @@ import com.luxrest.rm.OrderStatus.Order_Status;
 import com.luxrest.rm.PaymentMethod.Payment_Method;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
 import java.util.List;
@@ -44,5 +46,7 @@ public class Order {
         createdAt = new Date();
         if (this.isDeleted == null)
             this.isDeleted = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        createdBy = (Entity) authentication.getPrincipal();
     }
 }
