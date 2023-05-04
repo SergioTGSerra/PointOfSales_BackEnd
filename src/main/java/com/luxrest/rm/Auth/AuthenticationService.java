@@ -30,8 +30,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        if(entityRepository.existsByUsername(request.getUsername()) && entityRepository.existsByEmail(request.getEmail()))
-            throw new AlreadyExistsException("User Already Exists");
+        if(entityRepository.existsByUsername(request.getUsername()))
+            throw new AlreadyExistsException("Username Already Exists");
+        if(entityRepository.existsByEmail(request.getEmail()))
+            throw new AlreadyExistsException("Email Already Exists");
         var user = Entity.builder()
                 .name(request.getName())
                 .username(request.getUsername())
@@ -57,18 +59,19 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var user = entityRepository.findByUsername(request.getUsername())
+                .orElseThrow();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
+                        user,
                         request.getPassword()
                 )
         );
-        var user = entityRepository.findByUsername(request.getUsername())
-                .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
