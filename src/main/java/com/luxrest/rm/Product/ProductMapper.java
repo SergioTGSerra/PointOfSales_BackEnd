@@ -17,6 +17,7 @@ public class ProductMapper {
         productDTO.setPrice(product.getPrice());
         productDTO.setStock(product.getStock());
         productDTO.setIsActive(product.getIsActive());
+        productDTO.setImage(product.getImage());
         productDTO.setCategory(String.valueOf(product.getCategory().getId()));
         productDTO.setTax(Double.valueOf(product.getTax().getId()));
         return productDTO;

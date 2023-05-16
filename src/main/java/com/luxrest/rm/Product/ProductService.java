@@ -4,8 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,8 +40,14 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse createProduct(ProductRequest productRequest) {
+    public ProductResponse createProduct(
+            ProductRequest productRequest,
+            MultipartFile file
+    ) throws IOException {
+        if (file == null || !Objects.equals(file.getContentType(), "image/png"))
+            throw new IllegalArgumentException("O arquivo deve ser uma imagem PNG.");
         Product product = productMapper.toEntity(productRequest);
+        product.setImage(file.getBytes());
         return productMapper.toDTO(productRepository.save(product));
     }
 

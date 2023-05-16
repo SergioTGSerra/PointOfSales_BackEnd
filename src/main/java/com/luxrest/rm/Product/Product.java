@@ -25,6 +25,9 @@ public class Product {
 
     private Boolean isDeleted;
 
+    @Lob
+    private byte[] image;
+
     @ManyToOne
     private Category category;
 
