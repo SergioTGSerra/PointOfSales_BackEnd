@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 public class OrderDTO {
     private Long id;
-    @NotNull
     private Double amount;
     private String orderNote;
     @NotNull

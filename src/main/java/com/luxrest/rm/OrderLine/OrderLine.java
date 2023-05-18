@@ -3,7 +3,6 @@ package com.luxrest.rm.OrderLine;
 import com.luxrest.rm.Order.Order;
 import com.luxrest.rm.Pack.Pack;
 import com.luxrest.rm.Product.Product;
-import com.luxrest.rm.Tax.Tax;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,7 +10,7 @@ import java.util.Date;
 
 @Data
 @jakarta.persistence.Entity
-@Table(name = "order_items")
+@Table(name = "order_line")
 public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

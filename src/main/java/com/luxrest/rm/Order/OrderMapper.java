@@ -42,10 +42,10 @@ public class OrderMapper {
         order.setPaymentMethod(orderDTO.getPaymentMethod());
 
         List<OrderLine> orderLine = new ArrayList<>();
-        Double amount = null;
+        Double amount = 0.0;
         for(OrderLineDTO orderLineDTO : orderDTO.getOrderLine()){
             orderLine.add(orderLineMapper.toEntity(orderLineDTO));
-            amount += orderLineMapper.toEntity(orderLineDTO).getPrice();
+            amount += orderLineMapper.toEntity(orderLineDTO).getPrice() * orderLineMapper.toEntity(orderLineDTO).getQuantity();
         }
 
         order.setAmount(amount);
