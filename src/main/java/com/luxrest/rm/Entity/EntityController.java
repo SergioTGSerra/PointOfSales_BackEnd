@@ -23,6 +23,11 @@ public class EntityController {
         return entityService.getEntityById(id);
     }
 
+    @GetMapping("/logged")
+    public Entity getLoggedEntity(){
+        return entityService.getLoggedEntity();
+    }
+
     @PostMapping
     public Entity createEntityType(@RequestBody @Valid Entity entityType){
         return entityService.createEntity(entityType);

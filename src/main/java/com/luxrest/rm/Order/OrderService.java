@@ -1,10 +1,13 @@
 package com.luxrest.rm.Order;
 
+import com.luxrest.rm.Entity.Entity;
 import com.luxrest.rm.OrderLine.OrderLine;
 import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,5 +54,14 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Order not found" + id));
         deletedOrder.setIsDeleted(true);
         return orderMapper.toDTO(orderRepository.save(deletedOrder));
+    }
+
+    @Transactional
+    public OrderDTO getLoggedOrders() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Order> orders = orderRepository.findByCreatedBy((Entity) authentication.getPrincipal());
+        return (OrderDTO) orders.stream()
+                .map(orderMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

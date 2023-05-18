@@ -23,6 +23,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
+    @GetMapping("/logged")
+    public ResponseEntity<OrderDTO> getLoggedOrders(){
+        return ResponseEntity.ok(orderService.getLoggedOrders());
+    }
+
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
         return ResponseEntity.ok(orderService.createOrder(orderDTO));

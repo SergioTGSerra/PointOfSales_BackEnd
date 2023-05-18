@@ -2,6 +2,8 @@ package com.luxrest.rm.Entity;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,4 +42,9 @@ public class EntityService {
         return entityRepository.save(deletedEntity);
     }
 
+    public Entity getLoggedEntity() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return entityRepository.findById(((Entity) authentication.getPrincipal()).getId())
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + ((Entity) authentication.getPrincipal()).getId()));
+    }
 }
