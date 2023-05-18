@@ -36,12 +36,12 @@ public class OrderLineMapper {
         OrderLine orderLine = new OrderLine();
 
         orderLine.setQuantity(orderLineDTO.getQuantity());
-        orderLine.setPrice(orderLineDTO.getPrice());
 
 
         Product product = productRepository.findById(orderLineDTO.getProduct())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"+ orderLineDTO.getProduct()));
 
+        orderLine.setPrice(product.getPrice());
         orderLine.setProduct(product);
         orderLine.setTax(product.getTax().getValue());
 

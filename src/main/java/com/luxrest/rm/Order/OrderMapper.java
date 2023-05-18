@@ -37,15 +37,18 @@ public class OrderMapper {
 
         Order order = new Order();
 
-        order.setAmount(orderDTO.getAmount());
         order.setOrderNote(orderDTO.getOrderNote());
         order.setOrderStatus(orderDTO.getOrderStatus());
         order.setPaymentMethod(orderDTO.getPaymentMethod());
 
         List<OrderLine> orderLine = new ArrayList<>();
-        for(OrderLineDTO orderLineDTO : orderDTO.getOrderLine())
+        Double amount = null;
+        for(OrderLineDTO orderLineDTO : orderDTO.getOrderLine()){
             orderLine.add(orderLineMapper.toEntity(orderLineDTO));
+            amount += orderLineMapper.toEntity(orderLineDTO).getPrice();
+        }
 
+        order.setAmount(amount);
         order.setOrderLine(orderLine);
 
         return order;
