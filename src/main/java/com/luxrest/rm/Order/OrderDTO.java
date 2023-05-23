@@ -6,6 +6,7 @@ import com.luxrest.rm.PaymentMethod.Payment_Method;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,5 +18,6 @@ public class OrderDTO {
     private Order_Status orderStatus;
     @NotNull
     private Payment_Method paymentMethod;
+    private Date createdAt;
     private List<OrderLineDTO> orderLine;
 }

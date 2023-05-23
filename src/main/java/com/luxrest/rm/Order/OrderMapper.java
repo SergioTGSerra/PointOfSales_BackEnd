@@ -23,6 +23,7 @@ public class OrderMapper {
         orderDTO.setOrderNote(order.getOrderNote());
         orderDTO.setOrderStatus(order.getOrderStatus());
         orderDTO.setPaymentMethod(order.getPaymentMethod());
+        orderDTO.setCreatedAt(order.getCreatedAt());
 
         List<OrderLineDTO> orderLineDTOList = new ArrayList<>();
         for(OrderLine orderLine : order.getOrderLine())
