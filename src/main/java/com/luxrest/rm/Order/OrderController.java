@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping("/logged")
-    public ResponseEntity<OrderDTO> getLoggedOrders(){
+    public ResponseEntity<List<OrderDTO>> getLoggedOrders(){
         return ResponseEntity.ok(orderService.getLoggedOrders());
     }
 

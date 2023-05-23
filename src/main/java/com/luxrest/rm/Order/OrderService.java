@@ -57,10 +57,10 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDTO getLoggedOrders() {
+    public List<OrderDTO> getLoggedOrders() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<Order> orders = orderRepository.findByCreatedBy((Entity) authentication.getPrincipal());
-        return (OrderDTO) orders.stream()
+        return orders.stream()
                 .map(orderMapper::toDTO)
                 .collect(Collectors.toList());
     }
