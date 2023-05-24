@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EntityService {
     private final EntityRepository entityRepository;
+    private final EntityMapper entityMapper;
 
     public List<Entity> getAllEntities(){
         return entityRepository.findAll();
@@ -42,9 +43,9 @@ public class EntityService {
         return entityRepository.save(deletedEntity);
     }
 
-    public Entity getLoggedEntity() {
+    public EntityDTO getLoggedEntity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return entityRepository.findById(((Entity) authentication.getPrincipal()).getId())
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + ((Entity) authentication.getPrincipal()).getId()));
+        Entity entity = (Entity) authentication.getPrincipal();
+        return entityMapper.toDTO(entity);
     }
 }

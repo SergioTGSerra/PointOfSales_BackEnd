@@ -24,7 +24,7 @@ public class EntityController {
     }
 
     @GetMapping("/logged")
-    public Entity getLoggedEntity(){
+    public EntityDTO getLoggedEntity(){
         return entityService.getLoggedEntity();
     }
 
