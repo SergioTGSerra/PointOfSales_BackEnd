@@ -31,4 +31,11 @@ public class RestExceptionHandler {
         return new ErrorResponse("Already exists", ex.getMessage());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorResponse handleIllegalStateException(IllegalStateException ex) {
+        return new ErrorResponse("Conflict ", ex.getMessage());
+    }
+
 }

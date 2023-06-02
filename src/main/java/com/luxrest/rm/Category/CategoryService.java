@@ -1,5 +1,7 @@
 package com.luxrest.rm.Category;
 
+import com.luxrest.rm.Product.Product;
+import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
     }
@@ -36,6 +39,12 @@ public class CategoryService {
     public Category deleteCategory(Integer id){
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+        List<Product> products = productRepository.findByCategoryId(id);
+        if (!products.isEmpty()) {
+            throw new IllegalStateException("Cannot delete category. There are associated products.");
+        }
+
         category.setIsDeleted(false);
         return categoryRepository.save(category);
     }
