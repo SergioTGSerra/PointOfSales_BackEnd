@@ -51,6 +51,8 @@ public class CategoryService {
             existingCategory.setName(categoryDTO.getName());
         if (categoryDTO.getDescription() != null)
             existingCategory.setDescription(categoryDTO.getDescription());
+        if (categoryDTO.getIsActive() != null)
+            existingCategory.setIsActive(categoryDTO.getIsActive());
 
         Category savedCategory = categoryRepository.save(existingCategory);
         return categoryMapper.toDTO(savedCategory);
