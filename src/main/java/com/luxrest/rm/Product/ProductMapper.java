@@ -1,7 +1,6 @@
 package com.luxrest.rm.Product;
 
-import com.luxrest.rm.Category.CategoryMapper;
-import com.luxrest.rm.Category.CategoryService;
+import com.luxrest.rm.Category.CategoryRepository;
 import com.luxrest.rm.Tax.TaxService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -9,8 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class ProductMapper {
-    private final CategoryService categoryService;
-    private final CategoryMapper categoryMapper;
+    private final CategoryRepository categoryRepository;
     private final TaxService taxService;
     public ProductResponse toDTO(Product product) {
         ProductResponse productDTO = new ProductResponse();
@@ -31,7 +29,7 @@ public class ProductMapper {
         product.setPrice(productRequest.getPrice());
         product.setStock(productRequest.getStock());
         product.setIsActive(productRequest.getIsActive());
-        product.setCategory(categoryMapper.toEntity(categoryService.getCategoryById(productRequest.getCategory())));
+        product.setCategory(categoryRepository.getReferenceById(productRequest.getCategory()));
         product.setTax(taxService.getTaxById(productRequest.getTax()));
         return product;
     }

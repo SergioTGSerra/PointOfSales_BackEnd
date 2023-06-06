@@ -18,7 +18,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public List<ProductResponse> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findByIsDeletedFalse();
         return products.stream()
                 .map(productMapper::toDTO)
                 .collect(Collectors.toList());
