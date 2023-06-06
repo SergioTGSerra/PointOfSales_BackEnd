@@ -12,7 +12,7 @@ import java.util.List;
 public class TaxService {
     private final TaxRepository taxRepository;
     public List<Tax> getAllTaxes(){
-        return taxRepository.findAll();
+        return taxRepository.findByIsDeletedFalse();
     }
     @Transactional
     public Tax getTaxById(Integer id){
@@ -28,9 +28,11 @@ public class TaxService {
     }
     @Transactional
     public Tax updateTax(Integer id, Tax tax){
-        taxRepository.findById(id)
+        Tax existingTax = taxRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tax not found"));
-        tax.setId(id);
+
+        existingTax.setValue(tax.getValue());
+
         return taxRepository.save(tax);
     }
     @Transactional

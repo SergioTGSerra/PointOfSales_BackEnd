@@ -1,18 +1,16 @@
 package com.luxrest.rm.Tax;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/taxes")
 public class TaxController {
     private final TaxService taxService;
-
-    public TaxController(TaxService taxService) {
-        this.taxService = taxService;
-    }
 
     @GetMapping
     public List<Tax> getAllTaxes() {
