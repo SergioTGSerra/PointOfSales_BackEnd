@@ -14,8 +14,8 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-    public List<Category> getAllCategories(){
-        return categoryRepository.findAll();
+    public List<Category> getAllCategories() {
+        return categoryRepository.findByIsDeletedFalse();
     }
     @Transactional
     public Category getCategoryById(Integer id){
