@@ -45,7 +45,7 @@ public class CategoryService {
             throw new IllegalStateException("Cannot delete category. There are associated products.");
         }
 
-        category.setIsDeleted(false);
+        category.setIsDeleted(true);
         return categoryRepository.save(category);
     }
 }
