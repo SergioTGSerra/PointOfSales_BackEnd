@@ -44,11 +44,15 @@ public class CategoryService {
 
     @Transactional
     public CategoryDTO updateCategory(Integer id, CategoryDTO categoryDTO) {
-        categoryRepository.findById(id)
+        Category existingCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        categoryDTO.setId(id);
-        Category updatedCategory = categoryMapper.toEntity(categoryDTO);
-        Category savedCategory = categoryRepository.save(updatedCategory);
+
+        if (categoryDTO.getName() != null)
+            existingCategory.setName(categoryDTO.getName());
+        if (categoryDTO.getDescription() != null)
+            existingCategory.setDescription(categoryDTO.getDescription());
+
+        Category savedCategory = categoryRepository.save(existingCategory);
         return categoryMapper.toDTO(savedCategory);
     }
 
