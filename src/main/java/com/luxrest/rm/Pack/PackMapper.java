@@ -1,5 +1,6 @@
 package com.luxrest.rm.Pack;
 
+import com.luxrest.rm.Category.CategoryMapper;
 import com.luxrest.rm.Category.CategoryService;
 import com.luxrest.rm.PackProduct.PackProduct;
 import com.luxrest.rm.PackProduct.PackProductDTO;
@@ -17,6 +18,7 @@ import java.util.List;
 public class PackMapper {
 
     private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
     private final ProductRepository productRepository;
 
     public PackResponse toDTO(Pack pack){
@@ -46,7 +48,7 @@ public class PackMapper {
         pack.setName(packRequest.getName());
         pack.setStock(packRequest.getStock());
         pack.setIsActive(packRequest.getIsActive());
-        pack.setCategory(categoryService.getCategoryById(packRequest.getCategory()));
+        pack.setCategory(categoryMapper.toEntity(categoryService.getCategoryById(packRequest.getCategory())));
 
         List<PackProduct> packProducts = new ArrayList<>();
 

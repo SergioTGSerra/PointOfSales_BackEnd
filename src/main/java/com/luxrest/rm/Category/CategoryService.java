@@ -8,36 +8,52 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-    public List<Category> getAllCategories() {
-        return categoryRepository.findByIsDeletedFalse();
-    }
-    @Transactional
-    public Category getCategoryById(Integer id){
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
-    }
-    @Transactional
-    public Category saveCategory(Category category){
-        if(category.getId() != null)
-            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
-        return categoryRepository.save(category);
-    }
-    @Transactional
-    public Category updateCategory(Integer id, Category category){
-        categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        category.setId(id);
-        return categoryRepository.save(category);
+    private final CategoryMapper categoryMapper;
+
+    public List<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepository.findByIsDeletedFalse();
+
+        return categories.stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public Category deleteCategory(Integer id){
+    public CategoryDTO getCategoryById(Integer id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
+        return categoryMapper.toDTO(category);
+    }
+
+    @Transactional
+    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
+        if (categoryDTO.getId() != null) {
+            throw new IllegalArgumentException("You cannot pass the id parameter in the request!");
+        }
+        Category category = categoryMapper.toEntity(categoryDTO);
+        Category savedCategory = categoryRepository.save(category);
+        return categoryMapper.toDTO(savedCategory);
+    }
+
+    @Transactional
+    public CategoryDTO updateCategory(Integer id, CategoryDTO categoryDTO) {
+        categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        categoryDTO.setId(id);
+        Category updatedCategory = categoryMapper.toEntity(categoryDTO);
+        Category savedCategory = categoryRepository.save(updatedCategory);
+        return categoryMapper.toDTO(savedCategory);
+    }
+
+    @Transactional
+    public CategoryDTO deleteCategory(Integer id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
@@ -47,6 +63,7 @@ public class CategoryService {
         }
 
         category.setIsDeleted(true);
-        return categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
+        return categoryMapper.toDTO(savedCategory);
     }
 }
