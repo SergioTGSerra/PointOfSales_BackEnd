@@ -5,6 +5,7 @@ import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,11 +31,18 @@ public class CategoryService {
     }
     @Transactional
     public Category updateCategory(Integer id, Category category){
-        categoryRepository.findById(id)
+        Category existingCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        category.setId(id);
-        return categoryRepository.save(category);
+
+        try {
+            BeanUtils.copyProperties(existingCategory, category);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categoryRepository.save(existingCategory);
     }
+
     @Transactional
     public Category deleteCategory(Integer id){
         Category category = categoryRepository.findById(id)
