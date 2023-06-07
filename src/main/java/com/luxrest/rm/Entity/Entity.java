@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -55,6 +56,20 @@ public class Entity implements UserDetails {
 
     @OneToMany(mappedBy = "entity")
     private List<Token> tokens;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+        if(this.isActive == null){
+            this.isActive = true;
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

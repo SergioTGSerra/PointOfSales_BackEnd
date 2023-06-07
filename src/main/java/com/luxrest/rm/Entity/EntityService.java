@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -14,8 +15,13 @@ public class EntityService {
     private final EntityRepository entityRepository;
     private final EntityMapper entityMapper;
 
-    public List<Entity> getAllEntities(){
-        return entityRepository.findAll();
+    public List<EntityDTO> getAllEntities(){
+
+        List<Entity> entities = entityRepository.findAll();
+
+        return entities.stream()
+                .map(entityMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public Entity getEntityById(Long id){

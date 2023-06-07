@@ -14,7 +14,7 @@ public class EntityController {
     private final EntityService entityService;
 
     @GetMapping
-    public List<Entity> getAllEntities() {
+    public List<EntityDTO> getAllEntities() {
         return entityService.getAllEntities();
     }
 
