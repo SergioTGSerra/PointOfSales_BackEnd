@@ -1,5 +1,7 @@
 package com.luxrest.rm.Tax;
 
+import com.luxrest.rm.Product.Product;
+import com.luxrest.rm.Product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TaxService {
     private final TaxRepository taxRepository;
+    private final ProductRepository productRepository;
+
     public List<Tax> getAllTaxes(){
         return taxRepository.findByIsDeletedFalse();
     }
@@ -39,6 +43,12 @@ public class TaxService {
     public Tax deleteTax(Integer id){
         Tax deletedTax = taxRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tax not found"));
+
+        List<Product> products = productRepository.findByTaxId(id);
+        if (!products.isEmpty()) {
+            throw new IllegalStateException("Cannot delete tax. There are associated products.");
+        }
+
         deletedTax.setIsDeleted(true);
         return taxRepository.save(deletedTax);
     }
