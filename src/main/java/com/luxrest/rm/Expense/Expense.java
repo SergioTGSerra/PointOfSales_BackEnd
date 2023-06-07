@@ -3,6 +3,8 @@ package com.luxrest.rm.Expense;
 import com.luxrest.rm.Entity.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
 
@@ -25,7 +27,9 @@ public class Expense {
     private Date createdAt;
 
     @PrePersist
-    private void onCreate() {
+    public void prePersist() {
         createdAt = new Date();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        createdBy = (Entity) authentication.getPrincipal();
     }
 }
